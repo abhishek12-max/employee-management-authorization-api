@@ -8,6 +8,6 @@ const router= express.Router();
 
 router.get("/employee",authMiddleware,authorizedRole("admin","manager"),employeecontroller.getemployee)
 router.post("/employee",registervalidationresult,authMiddleware,authorizedRole("admin"),employeecontroller.createmployee)
-router.put("/employee/:id",authMiddleware,authorizedRole("admin","manager"),employeecontroller.editemployee)
+router.put("/employee/:id",authMiddleware,authorizedRole("admin","manager"),employeecontroller.updateemployee)
 router.delete("/employee/:id",authMiddleware,authorizedRole("admin"),employeecontroller.deleteemployee);
 module.exports= router;

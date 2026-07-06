@@ -63,7 +63,7 @@ const createmployee= async (req,res,next) => {
     }
 }
 
-const updateemployee= async (req,res) => {
+const updateemployee= async (req,res,next) => {
      try {
          const id= req.params.id;
          const {fullname,username,email}=req.body;
@@ -72,7 +72,7 @@ const updateemployee= async (req,res) => {
             email,
             username
          },{new:true});
-         
+
           if(!existingUser){
             return res.status(404).json({
                 message:"not found"
@@ -80,10 +80,10 @@ const updateemployee= async (req,res) => {
          }
          res.status(201).json({
             message:"update employee",
-             employee:{
-                fullname:employee.fullname,
-                username:employee.username,
-                email:employee.email
+            existingUser:{
+                fullname:existingUser.fullname,
+                username:existingUser.username,
+                email:existingUser.email
              }
          })
      } catch (error) {
@@ -91,15 +91,26 @@ const updateemployee= async (req,res) => {
      }
 }
 
-const deleteemployee= async(req,res)=>{
-     res.status(200).json({
-        message:"deleted"
-     })
+const deleteemployee= async(req,res,next)=>{
+     try {
+        const id= req.params.id;
+        const deleteemployee= await Usermodel.findByIdAndDelete(id)
+        if(!deleteemployee){
+            return res.status(404).json({
+                message:"not found"
+            })
+        }
+         res.status(200).json({
+          message:  "employee deleted succesfull"
+         })
+     } catch (error) {
+          next(error)
+     }
 }
 
 module.exports={
     getemployee,
     createmployee,
-    editemployee,
+    updateemployee,
     deleteemployee
 }
