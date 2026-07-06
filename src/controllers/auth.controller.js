@@ -72,16 +72,24 @@ const login= async (req,res,next) => {
              })
          }
          const token = jwt.sign({id:existingUser._id,role:existingUser.role},process.env.JWT_SECRET);
-         res.status(200).json({
+         res.cookie("token",token)
+         res.status(201).json({
             message:"login successfull",
-            token
          })
     } catch (error) {
         next(error)
     }
 }
 
+  const logout= async (req,res) => {
+      res.clearCookie("token")
+      res.status(201).json({
+        message:"logout sucessfull"
+      })
+  }
+
 module.exports= {
     register,
-    login
+    login,
+    logout
 }
