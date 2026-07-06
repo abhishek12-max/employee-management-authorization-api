@@ -63,10 +63,32 @@ const createmployee= async (req,res,next) => {
     }
 }
 
-const editemployee= async (req,res) => {
-    res.status(200).json({
-        message:"edited employee "
-    })
+const updateemployee= async (req,res) => {
+     try {
+         const id= req.params.id;
+         const {fullname,username,email}=req.body;
+         const existingUser= await Usermodel.findByIdAndUpdate(id,{
+            fullname,
+            email,
+            username
+         },{new:true});
+         
+          if(!existingUser){
+            return res.status(404).json({
+                message:"not found"
+            })
+         }
+         res.status(201).json({
+            message:"update employee",
+             employee:{
+                fullname:employee.fullname,
+                username:employee.username,
+                email:employee.email
+             }
+         })
+     } catch (error) {
+        next(error)
+     }
 }
 
 const deleteemployee= async(req,res)=>{
