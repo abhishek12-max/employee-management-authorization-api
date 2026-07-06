@@ -1,6 +1,7 @@
 const Usermodel= require("../models/user.model");
 const {validationResult}= require("express-validator");
 const bcrypt= require("bcrypt");
+const jwt= require("jsonwebtoken");
 const register= async (req,res,next) => {
      try {
           const error= validationResult(req);
@@ -70,8 +71,10 @@ const login= async (req,res,next) => {
                 message:"invalid password or email"
              })
          }
+         const token = jwt.sign({id:existingUser._id,role:existingUser.role},process.env.JWT_SECRET);
          res.status(200).json({
-            message:"login successfull"
+            message:"login successfull",
+            token
          })
     } catch (error) {
         next(error)
