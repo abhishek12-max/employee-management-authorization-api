@@ -1,6 +1,6 @@
 const Usermodel= require("../models/user.model");
 const {validationResult}= require("express-validator");
-
+const bcrypt= require("bcrypt");
 const register= async (req,res,next) => {
      try {
           const error= validationResult(req);
@@ -22,12 +22,13 @@ const register= async (req,res,next) => {
             message:"all ready register"
          })
     }
+    const hashpassword= await bcrypt.hash(password,10);
 
     const user= await Usermodel.create({
           fullname,
           username,
           email,
-          password
+          password:hashpassword
     });
     res.status(200).json({
         message:"user register successfull",
