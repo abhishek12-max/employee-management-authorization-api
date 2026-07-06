@@ -108,9 +108,29 @@ const deleteemployee= async(req,res,next)=>{
      }
 }
 
+const getEmployeebyID= async (req,res,next) => {
+    try {
+         const id= req.params.id
+    const employee= await Usermodel.findById(id).select("-password");
+    if(!employee){
+        return res.status(404).json({
+            message:"not found"
+        })
+    }
+    res.status(200).json({
+        message:"fetch employee by ID",
+        employee
+    })
+    } catch (error) {
+        next(error)
+    }
+   
+}
+
 module.exports={
     getemployee,
     createmployee,
     updateemployee,
-    deleteemployee
+    deleteemployee,
+    getEmployeebyID
 }
