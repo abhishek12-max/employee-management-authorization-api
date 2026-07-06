@@ -26,6 +26,18 @@ const  registervalidationresult= [
 
 ]
 
+const loginvalidationresult=[
+      body("email")
+      .notEmpty()
+      .withMessage("email is required")
+      .isEmail()
+      .withMessage("email is invalid"),
+      body("password")
+      .notEmpty()
+      .withMessage("password is required")
+]
+
 module.exports={
-    registervalidationresult
+    registervalidationresult,
+    loginvalidationresult
 }
