@@ -88,8 +88,23 @@ const login= async (req,res,next) => {
       })
   }
 
+  const getprofile= async (req,res) => {
+       try{
+          return res.status(200).json({
+            message:"employee profile",
+            employee:req.user
+          })
+       }catch(error) {
+          return res.status(500).json({
+              message:"something went worng"
+          })
+      }
+        
+    }
+
 module.exports= {
     register,
     login,
-    logout
+    logout,
+    getprofile
 }
