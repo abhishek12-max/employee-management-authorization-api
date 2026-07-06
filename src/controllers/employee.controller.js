@@ -4,7 +4,7 @@ const bcrypt= require("bcrypt");
 const getemployee = async (req,res) => {
     try {
          const employee= await Usermodel.find().select("-password")
-          if(!employee){
+          if(employee.length===0){
         return res.status(400).json({
             message:"no data"
         })
