@@ -8,4 +8,6 @@ const router= express.Router();
 router.get("/dashboard",authMiddleware,authorizedRole("admin"),admincontroller.getdashboard);
 router.get("/manager",authMiddleware,authorizedRole("admin"),admincontroller.getmanager);
 router.post("/manager",authMiddleware,authorizedRole("admin"),registervalidationresult,admincontroller.createmanager);
+router.delete("/manager/:id",authMiddleware,authorizedRole("admin"),admincontroller.deletemanager)
 module.exports= router;
+

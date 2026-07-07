@@ -87,8 +87,30 @@ const createmanager= async (req,res,next) => {
     }
 }
 
+const deletemanager= async (req,res,next) => {
+    try {
+        const id= req.params.id;
+        const manager=  await Usermodel.findOne({
+            _id:id,
+            role:"manager"
+        })
+
+         if(!manager){
+            return res.status(400).json({
+                message:"not found"
+            })
+         }
+         await  Usermodel.findByIdAndDelete(id)
+            res.status(200).json({
+                message:"successfull deleted"
+            })
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports={
     getdashboard,
     getmanager,
-    createmanager
+    createmanager,
+    deletemanager
 }
