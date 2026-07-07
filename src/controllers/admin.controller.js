@@ -108,9 +108,44 @@ const deletemanager= async (req,res,next) => {
         next(error)
     }
 }
+
+const updatemanager= async (req,res,next) => {
+    try {
+        const id= req.params.id
+        const{fullname,username,email}= req.body
+        const existingmanager= await Usermodel.findOne({
+            _id:id,
+            role:"manager"
+        }) 
+        if(!existingmanager){
+            return res.status(404).json({
+                message:"not found"
+            })
+        }
+     const updatemanager =   await Usermodel.findByIdAndUpdate(id,{
+            fullname,
+            username,
+            email
+        },{
+            new:true
+        });
+        res.status(200).json({
+            message:"manager updated successfully",
+            updatemanager:{
+                fullname: updatemanager.fullname,
+                username:updatemanager.username,
+                email:updatemanager.email,
+                role:updatemanager.role
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports={
     getdashboard,
     getmanager,
     createmanager,
-    deletemanager
+    deletemanager,
+    updatemanager
 }

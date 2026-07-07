@@ -9,5 +9,6 @@ router.get("/dashboard",authMiddleware,authorizedRole("admin"),admincontroller.g
 router.get("/manager",authMiddleware,authorizedRole("admin"),admincontroller.getmanager);
 router.post("/manager",authMiddleware,authorizedRole("admin"),registervalidationresult,admincontroller.createmanager);
 router.delete("/manager/:id",authMiddleware,authorizedRole("admin"),admincontroller.deletemanager)
+router.put("/manager/:id",authMiddleware,authorizedRole("admin"),admincontroller.updatemanager)
 module.exports= router;
 
